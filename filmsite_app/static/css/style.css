@@ -1,0 +1,27 @@
+.films-list {
+    padding: 90px 0;
+    background-color: rebeccapurple;
+}
+
+.cover {
+    color: white;
+    display: flex;
+    align-items: center;
+    min-height: 80vh;
+}
+
+#film {
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 80vh;
+}
+
+.card img {
+    max-height: 257px;
+}
+
+.main {
+    background: wheat;
+}

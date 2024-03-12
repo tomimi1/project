@@ -1,0 +1,104 @@
+{% extends '../base.html' %}
+{% block content %}
+{% if user.is_authenticated %}
+<div class="films-list">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6" style="max-width: 50%">
+        <h1 class="display-5 fw-bold mb-5 text-light">Films by category: "{{genre.name}}"</h1>
+      </div>
+      <div class="col-md-6" style="text-align: right; max-width: 50%">
+        <button
+          class="btn btn-primary"
+          type="button"
+          data-bs-toggle="modal"
+          data-bs-target="#exampleModal"
+        >
+          Filter
+        </button>
+      </div>
+    </div>
+    <div class="row">
+      {% for film in films %}
+      <div class="col-md-3">
+        <div class="card">
+          <img src="{{film.url_poster}}" class="card-img-top" alt="..." />
+          <div class="card-body">
+            <h5 class="card-title">{{film.name}}</h5>
+            <p class="card-text">{{film.genre}}</p>
+            <a href="{% url 'film_detail_page' pk=film.pk %}" class="btn btn-primary">Watch</a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+<div
+  class="modal fade"
+  id="exampleModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h1 class="modal-title fs-5 text-light" id="exampleModalLabel">Filter</h1>
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="modal"
+        aria-label="Close"
+      ></button>
+    </div>
+    <div class="modal-body">
+      <form action="{% url 'films_by_search_page' %}">
+        <div class="row">
+          <div class="col-8">
+            <input
+              type="search"
+              name="query"
+              class="form-control"
+              placeholder="Film name, description"
+            />
+          </div>
+          <div class="col-4">
+            <button class="btn btn-primary">Search</button>
+          </div>
+        </div>
+      </form>
+      <h2 class="m-3 text-light">Categories</h2>
+      <a href="{% url 'all_films_page' %}" class="btn btn-primary m-1">
+        All
+      </a>
+      {% for i in genres %}
+      <a
+        href="{% url 'films_by_category_page' i.slug %}"
+        class="btn btn-primary m-1"
+      >
+        {{i.name}}
+      </a>
+      {% endfor %}
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+        Close
+      </button>
+      <button type="button" class="btn btn-primary">Search</button>
+    </div>
+  </div>
+</div>
+</div>
+{% else %}
+<div class="container mt-5 mb-5">
+  <div class="card-body">
+    <div class="alert alert-warning mb-5" role="alert">
+      <p>Before watch films, login or registry</p>
+    </div>
+    <a href="{% url 'sign_up_page' %}" class="btn btn-primary">Sign Up</a>
+    <a href="{% url 'login_page' %}" class="btn btn-primary">Login</a>
+  </div>
+</div>
+{% endif %}
+{% endblock %}
